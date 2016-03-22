@@ -105,7 +105,7 @@ public class MainFrame {
 		frmDefifootManager.setResizable(false);
 		frmDefifootManager.setBounds(100, 100, 750, 600);
 		frmDefifootManager.getContentPane().setBackground(bgMainColor);
-		//frmDefifootManager.setIconImage(new ImageIcon(this.getClass().getResource("logo.png")).getImage());
+		frmDefifootManager.setIconImage(new ImageIcon(this.getClass().getResource("images/logo.png")).getImage());
 		frmDefifootManager.setLocationRelativeTo(null);
 		frmDefifootManager.getContentPane().setLayout(null);
 		
@@ -131,7 +131,7 @@ public class MainFrame {
 		minimizeButton.setBorderPainted(false);
 		minimizeButton.setFocusPainted(false);
 		minimizeButton.setBackground(bgMainColor);
-		minimizeButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/minimize.png")).getImage()));
+		minimizeButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/minimize.png")).getImage()));
 		minimizeButton.setBounds(702, 0, 24, 20);
 		toolBarPanel.add(minimizeButton);
 		
@@ -154,7 +154,7 @@ public class MainFrame {
 		closeButton.setBorderPainted(false);
 		closeButton.setFocusPainted(false);
 		closeButton.setBackground(bgMainColor);
-		closeButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/close.png")).getImage()));
+		closeButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/close.png")).getImage()));
 		closeButton.setBounds(726, 0, 24, 20);
 		toolBarPanel.add(closeButton);
 		
@@ -177,7 +177,7 @@ public class MainFrame {
 			            "Quitter?",
 			            JOptionPane.YES_NO_OPTION,
 			            JOptionPane.WARNING_MESSAGE,
-		    		    new ImageIcon(new ImageIcon(this.getClass().getResource("icons/warning.png")).getImage()),
+		    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/warning.png")).getImage()),
 			            options,
 			            options[1]);
 
@@ -189,7 +189,7 @@ public class MainFrame {
 		
 		JLabel logoLabel = new JLabel("");
 		logoLabel.setBounds(0, 12, 335, 80);
-		logoLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("logo-complete.png")).getImage()));
+		logoLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/logo-complete.png")).getImage()));
 		toolBarPanel.add(logoLabel);
 		
 		toolBarPanel.addMouseListener(new MouseAdapter() {
@@ -321,7 +321,7 @@ public class MainFrame {
 		generateButton.setBackground(bgButtonActiveColor);
 		generateButton.setForeground(whiteColor);
 		generateButton.setIconTextGap(7);
-		generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/generate.png")).getImage()));
+		generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/generate.png")).getImage()));
 		generateButton.setBounds(0, 163, 145, 35);
 		generateActionsPanel.add(generateButton);
 		
@@ -331,7 +331,7 @@ public class MainFrame {
 				if(me.getComponent().isEnabled()) {
 					generateButton.setBorderPainted(true);
 					generateButton.setBorder(BorderFactory.createLineBorder(linkColor));
-					generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/generate_reverse.png")).getImage()));
+					generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/generate_reverse.png")).getImage()));
 					generateButton.setBackground(whiteColor);
 					generateButton.setForeground(bgButtonActiveColor);
 				}
@@ -340,7 +340,7 @@ public class MainFrame {
 			public void mouseExited(MouseEvent me) {
 				if(me.getComponent().isEnabled()) {
 					generateButton.setBorderPainted(false);
-					generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/generate.png")).getImage()));
+					generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/generate.png")).getImage()));
 					generateButton.setBackground(bgButtonActiveColor);
 					generateButton.setForeground(whiteColor);
 				}
@@ -356,7 +356,7 @@ public class MainFrame {
 		initButton.setBackground(bgButtonActiveColor);
 		initButton.setForeground(whiteColor);
 		initButton.setIconTextGap(7);
-		initButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize.png")).getImage()));
+		initButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize.png")).getImage()));
 		initButton.setBounds(0, 283, 145, 35);
 		generateActionsPanel.add(initButton);
 		
@@ -366,7 +366,7 @@ public class MainFrame {
 				if(me.getComponent().isEnabled()) {
 					((AbstractButton) me.getComponent()).setBorderPainted(true);
 					((JComponent) me.getComponent()).setBorder(BorderFactory.createLineBorder(linkColor));
-					((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize_reverse.png")).getImage()));
+					((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize_reverse.png")).getImage()));
 					me.getComponent().setBackground(whiteColor);
 					me.getComponent().setForeground(bgButtonActiveColor);
 				}
@@ -375,7 +375,7 @@ public class MainFrame {
 			public void mouseExited(MouseEvent me) {
 				if(me.getComponent().isEnabled()) {
 					((AbstractButton) me.getComponent()).setBorderPainted(false);
-					((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize.png")).getImage()));
+					((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize.png")).getImage()));
 					me.getComponent().setBackground(bgButtonActiveColor);
 					me.getComponent().setForeground(whiteColor);
 				}
@@ -383,7 +383,7 @@ public class MainFrame {
 			@Override
 			public void mouseClicked(MouseEvent me) {
 				strategyComboBox.setSelectedIndex(0);
-				((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize.png")).getImage()));
+				((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize.png")).getImage()));
 				me.getComponent().setBackground(bgButtonActiveColor);
 				me.getComponent().setForeground(whiteColor);
 			}
@@ -448,7 +448,7 @@ public class MainFrame {
 		JLabel favoriteShortcutLabel = new JLabel("");
 		favoriteShortcutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		favoriteShortcutLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite.png")).getImage()));
+		favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite.png")).getImage()));
 		favoriteShortcutLabel.setBounds(0, 0, 25, 25);
 		strategyActionsPanel.add(favoriteShortcutLabel);
 		
@@ -456,14 +456,14 @@ public class MainFrame {
 		//saveShortcutLabel.setEnabled(false);
 		saveShortcutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		saveShortcutLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		saveShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/save_2.png")).getImage()));
+		saveShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/save_2.png")).getImage()));
 		saveShortcutLabel.setBounds(37, 0, 25, 25);
 		strategyActionsPanel.add(saveShortcutLabel);
 		
 		JLabel initShortcutLabel = new JLabel("");
 		initShortcutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		initShortcutLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		initShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize_2.png")).getImage()));
+		initShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize_2.png")).getImage()));
 		initShortcutLabel.setBounds(74, 0, 25, 25);
 		strategyActionsPanel.add(initShortcutLabel);
 		
@@ -482,18 +482,18 @@ public class MainFrame {
 		AddToFavoritePanel.add(AddToFavoriteLabel);
 		
 		JLabel stadiumLabel = new JLabel("");
-		stadiumLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("stadium.png")).getImage()));
+		stadiumLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/stadium.png")).getImage()));
 		stadiumLabel.setBounds(6, 6, 210, 361);
 		strategyPanel.add(stadiumLabel);
 		
 		initShortcutLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				initShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize_reverse_2.png")).getImage()));
+				initShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize_reverse_2.png")).getImage()));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
-				initShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/initialize_2.png")).getImage()));
+				initShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize_2.png")).getImage()));
 			}
 			@Override
 			public void mouseClicked(MouseEvent me) {
@@ -507,12 +507,12 @@ public class MainFrame {
 			@Override
 			public void mouseEntered(MouseEvent me) {
 				//if(me.getComponent().isEnabled()) {
-					saveShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/save_reverse_2.png")).getImage()));
+					saveShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/save_reverse_2.png")).getImage()));
 				//}
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
-				saveShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/save_2.png")).getImage()));
+				saveShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/save_2.png")).getImage()));
 			}
 			@Override
 			public void mouseClicked(MouseEvent me) {
@@ -553,7 +553,7 @@ public class MainFrame {
 						    			"La tactique a bien été sauvegardée.",
 						    			"Complétée",
 						    		    JOptionPane.INFORMATION_MESSAGE,
-						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("icons/success.png")).getImage()));
+						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/success.png")).getImage()));
 						    		filePath = file.getParent();
 						    		fileCreated = true;
 						    	} catch (Exception e) {
@@ -561,7 +561,7 @@ public class MainFrame {
 						    			"La tactique n'a pas été sauvegardée!",
 						    			"Echec",
 						    		    JOptionPane.ERROR_MESSAGE,
-						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("icons/error.png")).getImage()));
+						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/error.png")).getImage()));
 						    	}
 						    } else {
 						    	filePath = file.getParent();
@@ -573,7 +573,7 @@ public class MainFrame {
 					    			"La tactique a bien été sauvegardée.",
 					    			"Complétée",
 					    		    JOptionPane.INFORMATION_MESSAGE,
-					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("icons/success.png")).getImage()));
+					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/success.png")).getImage()));
 						    	filePath = file.getParent();
 						    	fileCreated = true;
 					    	} catch (Exception e) {
@@ -581,7 +581,7 @@ public class MainFrame {
 					    			"La tactique n'a pas été sauvegardée!",
 					    			"Echec",
 					    		    JOptionPane.ERROR_MESSAGE,
-					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("icons/error.png")).getImage()));
+					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/error.png")).getImage()));
 					    	}
 				    	}
 				    } else { // Save is cancelled
@@ -595,24 +595,24 @@ public class MainFrame {
 			@Override
 			public void mouseEntered(MouseEvent me) {
 				if(alreadyFavorite) {
-					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite_already_2.png")).getImage()));
+					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite_already_2.png")).getImage()));
 				} else {
-					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite_reverse.png")).getImage()));
+					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite_reverse.png")).getImage()));
 				}
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
 				if(alreadyFavorite) {
-					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite_already.png")).getImage()));
+					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite_already.png")).getImage()));
 				} else {
-					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite.png")).getImage()));
+					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite.png")).getImage()));
 				}
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				alreadyFavorite = !alreadyFavorite;
 				if(alreadyFavorite) {
-					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite_already_2.png")).getImage()));
+					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite_already_2.png")).getImage()));
 					AddToFavoritePanel.setVisible(true);
 					int delay = 1000;
 					ActionListener taskPerformer = new ActionListener() {
@@ -622,7 +622,7 @@ public class MainFrame {
 					};
 					new Timer(delay, taskPerformer).start();
 				} else {
-					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("btn/favorite_reverse.png")).getImage()));
+					favoriteShortcutLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/favorite_reverse.png")).getImage()));
 				}
 			}
 		});
@@ -687,7 +687,7 @@ public class MainFrame {
 		connexionPanel.add(usernamePanel);
 		
 		JLabel usernameLabel = new JLabel("");
-		usernameLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("icons/user.png")).getImage()));
+		usernameLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/user.png")).getImage()));
 		usernameLabel.setBounds(9, 9, 16, 16);
 		usernamePanel.add(usernameLabel);
 		
@@ -707,7 +707,7 @@ public class MainFrame {
 		connexionPanel.add(passwordPanel);
 		
 		JLabel passwordLabel = new JLabel("");
-		passwordLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("icons/password.png")).getImage()));
+		passwordLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/password.png")).getImage()));
 		passwordLabel.setBounds(9, 9, 16, 16);
 		passwordPanel.add(passwordLabel);
 		
@@ -734,7 +734,7 @@ public class MainFrame {
 		
 		JLabel loginLabel = new JLabel("");
 		loginLabel.setVisible(false);
-		loginLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("icons/ajax-loader.gif")).getImage()));
+		loginLabel.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/ajax-loader.gif")).getImage()));
 		loginLabel.setBounds(184, 202, 32, 32);
 		connexionPanel.add(loginLabel);
 		
