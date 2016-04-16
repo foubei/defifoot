@@ -2,10 +2,11 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+/**
+ * Filter the type of file wanted to be accepted.
+ */
 public class FileTypeFilter extends FileFilter {
-	
-	private final String extension;
-	private final String description;
+	private final String extension, description;
 	
 	public FileTypeFilter(String extension, String description) {
 		this.extension = extension;

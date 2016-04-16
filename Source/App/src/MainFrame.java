@@ -865,7 +865,7 @@ public class MainFrame {
 										filterDetailsPanel.setVisible(true);
 										return;
 								}
-							} else {
+							} else { // Login failed
 								loginLabel.setVisible(false);
 								loginFailedLabel.setVisible(true);
 								loginFailedLabel.setText("* " + result.get("ErrorMsg").toString());
