@@ -46,6 +46,8 @@ import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 
+import org.json.simple.JSONObject;
+
 public class MainFrame {
 	// Global variables
 	public static Properties prop = new Properties(); // Take the data from config.properties file
@@ -739,11 +741,12 @@ public class MainFrame {
 		loginLabel.setBounds(184, 202, 32, 32);
 		connexionPanel.add(loginLabel);
 		
-		JLabel loginFailedLabel = new JLabel("*Login ou mot de passe incorrect");
+		JLabel loginFailedLabel = new JLabel("");
 		loginFailedLabel.setVisible(false);
+		loginFailedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginFailedLabel.setFont(mediumFont);
 		loginFailedLabel.setForeground(Color.decode(MainFrame.prop.getProperty("coral_red")));
-		loginFailedLabel.setBounds(95, 202, 210, 32);
+		loginFailedLabel.setBounds(35, 202, 330, 32);
 		connexionPanel.add(loginFailedLabel);
 		
 		usernameTextField.addFocusListener(new FocusAdapter() {
@@ -849,13 +852,11 @@ public class MainFrame {
 					loginButton.setEnabled(false);
 					ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 					executor.schedule(new Runnable(){
+						@SuppressWarnings("deprecation")
 						public void run(){
-							//new GetPlayersClass(usernameTextField.getText(), passwordField.getText());
-							//GetPlayersClass.main();
-							/*if(!result) {
-								loginLabel.setVisible(false);
-								loginFailedLabel.setVisible(true);
-							} else {
+							new Login(usernameTextField.getText(), passwordField.getText());
+							JSONObject result = Login.main();
+							if(result.get("Error").equals(false)) { // Successfully logged in
 								loginLabel.setVisible(false);
 								connexionPanel.setVisible(false);
 								isLoggedIn = true;
@@ -864,7 +865,11 @@ public class MainFrame {
 										filterDetailsPanel.setVisible(true);
 										return;
 								}
-							}*/
+							} else {
+								loginLabel.setVisible(false);
+								loginFailedLabel.setVisible(true);
+								loginFailedLabel.setText("* " + result.get("ErrorMsg").toString());
+							}
 							usernameTextField.setEditable(true);
 							passwordField.setEditable(true);
 							loginButton.setEnabled(true);
