@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -72,6 +73,9 @@ public class MainFrame {
 	private JTextField usernameTextField;
 	private JPasswordField passwordField;
 	
+	// Global variables
+	public static Properties prop = new Properties(); // Take the data from config.properties file
+	
 	/**
 	 * Launch the application.
 	 */
@@ -90,8 +94,13 @@ public class MainFrame {
 
 	/**
 	 * Create the application.
+	 * @throws Exception 
 	 */
-	public MainFrame() {
+	public MainFrame() throws Exception {
+		// Get the data from config.properties file
+		new ReadPropertyFile().main();
+		
+		// Initialize the main frame
 		initialize();
 	}
 
@@ -173,7 +182,7 @@ public class MainFrame {
 				UIManager.put("Panel.background", bgSecondaryColor);
 				String[] options = {"Oui", "Non"};
 				int dialog = JOptionPane.showOptionDialog(frmDefifootManager,
-			            "Êtes-vous sûre de vouloir quitter?",
+			            "Etes vous sûre de vouloir quitter?",
 			            "Quitter?",
 			            JOptionPane.YES_NO_OPTION,
 			            JOptionPane.WARNING_MESSAGE,
@@ -474,7 +483,7 @@ public class MainFrame {
 		AddToFavoritePanel.setLayout(null);
 		strategyPanel.add(AddToFavoritePanel);
 		
-		JLabel AddToFavoriteLabel = new JLabel("Ajoutée aux favoris");
+		JLabel AddToFavoriteLabel = new JLabel("Ajoutط£آ©e aux favoris");
 		AddToFavoriteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		AddToFavoriteLabel.setFont(buttonFont);
 		AddToFavoriteLabel.setForeground(whiteColor);
@@ -538,7 +547,7 @@ public class MainFrame {
 				    	if(file.exists()) {
 							String[] options = {"Oui", "Non"};
 							int dialog = JOptionPane.showOptionDialog(frmDefifootManager,
-						            "Êtes-vous sûre de vouloir remplacer le fichier existant?",
+						            "ط£ظ¹tes-vous sط£آ»re de vouloir remplacer le fichier existant?",
 						            "Confirmer",
 						            JOptionPane.YES_NO_OPTION,
 						            JOptionPane.QUESTION_MESSAGE,
@@ -550,15 +559,15 @@ public class MainFrame {
 						    	try{
 						    		ImageIO.write((BufferedImage)img, "png", file);
 						    		JOptionPane.showMessageDialog(null,
-						    			"La tactique a bien été sauvegardée.",
-						    			"Complétée",
+						    			"La tactique a bien ط£آ©tط£آ© sauvegardط£آ©e.",
+						    			"Complط£آ©tط£آ©e",
 						    		    JOptionPane.INFORMATION_MESSAGE,
 						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/success.png")).getImage()));
 						    		filePath = file.getParent();
 						    		fileCreated = true;
 						    	} catch (Exception e) {
 						    		JOptionPane.showMessageDialog(null,
-						    			"La tactique n'a pas été sauvegardée!",
+						    			"La tactique n'a pas ط£آ©tط£آ© sauvegardط£آ©e!",
 						    			"Echec",
 						    		    JOptionPane.ERROR_MESSAGE,
 						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/error.png")).getImage()));
@@ -570,15 +579,15 @@ public class MainFrame {
 				    		try {
 					    		ImageIO.write((BufferedImage)img, "png", file);
 						    	JOptionPane.showMessageDialog(null,
-					    			"La tactique a bien été sauvegardée.",
-					    			"Complétée",
+					    			"La tactique a bien ط£آ©tط£آ© sauvegardط£آ©e.",
+					    			"Complط£آ©tط£آ©e",
 					    		    JOptionPane.INFORMATION_MESSAGE,
 					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/success.png")).getImage()));
 						    	filePath = file.getParent();
 						    	fileCreated = true;
 					    	} catch (Exception e) {
 					    		JOptionPane.showMessageDialog(null,
-					    			"La tactique n'a pas été sauvegardée!",
+					    			"La tactique n'a pas ط£آ©tط£آ© sauvegardط£آ©e!",
 					    			"Echec",
 					    		    JOptionPane.ERROR_MESSAGE,
 					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/error.png")).getImage()));
@@ -674,7 +683,7 @@ public class MainFrame {
 		////////////////////////////////////////////////////////////
 		JPanel connexionPanel = new JPanel();
 		connexionPanel.setVisible(false);
-		connexionPanel.setBorder(new TitledBorder(new MatteBorder(3, 3, 3, 3, grayColor), "Se connecter à Defifoot", TitledBorder.LEADING, TitledBorder.TOP, null, grayColor));
+		connexionPanel.setBorder(new TitledBorder(new MatteBorder(3, 3, 3, 3, grayColor), "Se connecter ط£آ  Defifoot", TitledBorder.LEADING, TitledBorder.TOP, null, grayColor));
 		connexionPanel.setOpaque(false);
 		connexionPanel.setBounds(173, 89, 400, 250);
 		connexionPanel.setLayout(null);
@@ -846,8 +855,9 @@ public class MainFrame {
 					ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 					executor.schedule(new Runnable(){
 						public void run(){
-							boolean result = new FilterClass(usernameTextField.getText(), passwordField.getText()).getPlayers("http://defifoot.com/modules/equipe/effectif.php?dataview=niv");
-							if(!result) {
+							//new GetPlayersClass(usernameTextField.getText(), passwordField.getText());
+							//GetPlayersClass.main();
+							/*if(!result) {
 								loginLabel.setVisible(false);
 								loginFailedLabel.setVisible(true);
 							} else {
@@ -859,7 +869,7 @@ public class MainFrame {
 										filterDetailsPanel.setVisible(true);
 										return;
 								}
-							}
+							}*/
 							usernameTextField.setEditable(true);
 							passwordField.setEditable(true);
 							loginButton.setEnabled(true);
