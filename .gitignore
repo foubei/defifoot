@@ -1,9 +1,0 @@
-# Eclipse auto generated files #
-################################
-Source/.metadata/*
-Source/RemoteSystemsTempFiles/*
-
-# Backups #
-################################
-Source/Backups
-Source/Backups/*
