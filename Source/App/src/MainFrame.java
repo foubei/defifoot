@@ -47,24 +47,16 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 
 public class MainFrame {
-
+	// Global variables
+	public static Properties prop = new Properties(); // Take the data from config.properties file
+	
+	// Common variables used in this frame only
 	private JFrame frmDefifootManager;
-	private int pressedX = 0,
-			    pressedY = 0,
-			    functionChosen = 1;
-	private String filePath = "/home/me/Documents";
+	private int pressedX = 0, pressedY = 0, // (x,y) coordinations when user is moving the frame 
+			    functionChosen = 1; // The navbar menu chosen
+	private String filePath = "/home/me/Documents"; // Default location of saving tactics
 	private boolean alreadyFavorite = false,
 					isLoggedIn = false;
-	private Color bgMainColor = new Color(46, 204, 64),
-			      bgSecondaryColor = Color.WHITE,
-			      bgButtonActiveColor = new Color(27,124,229),
-			      whiteColor = Color.WHITE,
-			      successColor = new Color(46, 204, 64),
-			      dangerColor = new Color(255, 65, 54),
-			      warningColor = Color.ORANGE,
-			      linkColor = new Color(27,124,229),
-			      blackColor = new Color(17, 17, 17),
-			      grayColor = new Color(170, 170, 170);
 	private Font titleFont = new Font("Segoe UI", Font.BOLD, 14),
 			     smallFont = new Font("Trebuchet MS", Font.PLAIN, 11),
 			     mediumFont = new Font("Trebuchet MS", Font.PLAIN, 14),
@@ -72,9 +64,6 @@ public class MainFrame {
 	private JLabel saveShortcutLabel;
 	private JTextField usernameTextField;
 	private JPasswordField passwordField;
-	
-	// Global variables
-	public static Properties prop = new Properties(); // Take the data from config.properties file
 	
 	/**
 	 * Launch the application.
@@ -97,8 +86,9 @@ public class MainFrame {
 	 * @throws Exception 
 	 */
 	public MainFrame() throws Exception {
-		// Get the data from config.properties file
-		new ReadPropertyFile().main();
+		// Get the data from configuration files
+		new ReadPropertyFile().main("common/config.properties");
+		new ReadPropertyFile().main("common/colors.properties");
 		
 		// Initialize the main frame
 		initialize();
@@ -107,13 +97,14 @@ public class MainFrame {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	private void initialize() {
 		frmDefifootManager = new JFrame();
 		frmDefifootManager.setTitle("Defifoot Manager");
 		frmDefifootManager.setUndecorated(true);
 		frmDefifootManager.setResizable(false);
 		frmDefifootManager.setBounds(100, 100, 750, 600);
-		frmDefifootManager.getContentPane().setBackground(bgMainColor);
+		frmDefifootManager.getContentPane().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		frmDefifootManager.setIconImage(new ImageIcon(this.getClass().getResource("images/logo.png")).getImage());
 		frmDefifootManager.setLocationRelativeTo(null);
 		frmDefifootManager.getContentPane().setLayout(null);
@@ -127,19 +118,21 @@ public class MainFrame {
 		
 		JPanel toolBarPanel = new JPanel();
 		toolBarPanel.setOpaque(false);
+		toolBarPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 		toolBarPanel.setBounds(0, 0, 750, 92);
 		toolBarPanel.setLayout(null);
 		headerPanel.add(toolBarPanel);
 		
 		JPanel toolBarSparatorPanel = new JPanel();
-		toolBarSparatorPanel.setBackground(bgSecondaryColor);
+		toolBarSparatorPanel.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
 		toolBarSparatorPanel.setBounds(0, 9, 697, 2);
 		toolBarPanel.add(toolBarSparatorPanel);
 		
 		JButton minimizeButton = new JButton("");
 		minimizeButton.setBorderPainted(false);
 		minimizeButton.setFocusPainted(false);
-		minimizeButton.setBackground(bgMainColor);
+		minimizeButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		minimizeButton.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		minimizeButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/minimize.png")).getImage()));
 		minimizeButton.setBounds(702, 0, 24, 20);
 		toolBarPanel.add(minimizeButton);
@@ -147,11 +140,11 @@ public class MainFrame {
 		minimizeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(warningColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("tangerine_yellow")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
-				me.getComponent().setBackground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 			@Override
 			public void mouseClicked(MouseEvent me) {
@@ -162,7 +155,8 @@ public class MainFrame {
 		JButton closeButton = new JButton("");
 		closeButton.setBorderPainted(false);
 		closeButton.setFocusPainted(false);
-		closeButton.setBackground(bgMainColor);
+		closeButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		closeButton.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		closeButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/close.png")).getImage()));
 		closeButton.setBounds(726, 0, 24, 20);
 		toolBarPanel.add(closeButton);
@@ -170,16 +164,16 @@ public class MainFrame {
 		closeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(dangerColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("coral_red")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
-				me.getComponent().setBackground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 			@Override
 			public void mouseClicked(MouseEvent me) {
-				UIManager.put("OptionPane.background", bgSecondaryColor);
-				UIManager.put("Panel.background", bgSecondaryColor);
+				UIManager.put("OptionPane.background", Color.decode(MainFrame.prop.getProperty("white")));
+				UIManager.put("Panel.background", Color.decode(MainFrame.prop.getProperty("white")));
 				String[] options = {"Oui", "Non"};
 				int dialog = JOptionPane.showOptionDialog(frmDefifootManager,
 			            "Etes vous sûre de vouloir quitter?",
@@ -221,7 +215,7 @@ public class MainFrame {
 		headerPanel.add(navBarPanel);
 		
 		JPanel generatePanel = new JPanel();
-		generatePanel.setBackground(bgSecondaryColor);
+		generatePanel.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
 		generatePanel.setBounds(130, 0, 120, 50);
 		generatePanel.setLayout(null);
 		navBarPanel.add(generatePanel);
@@ -229,13 +223,13 @@ public class MainFrame {
 		JLabel generateLabel = new JLabel("GENERER");
 		generateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		generateLabel.setFont(titleFont);
-		generateLabel.setBackground(whiteColor);
-		generateLabel.setForeground(bgMainColor);
+		generateLabel.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+		generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		generateLabel.setBounds(0, 0, 120, 50);
 		generatePanel.add(generateLabel);
 		
 		JPanel filterPanel = new JPanel();
-		filterPanel.setBackground(bgMainColor);
+		filterPanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		filterPanel.setBounds(253, 0, 120, 50);
 		filterPanel.setLayout(null);
 		navBarPanel.add(filterPanel);
@@ -244,13 +238,13 @@ public class MainFrame {
 		filterLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		filterLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		filterLabel.setFont(titleFont);
-		filterLabel.setBackground(whiteColor);
-		filterLabel.setForeground(whiteColor);
+		filterLabel.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+		filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		filterLabel.setBounds(0, 0, 120, 50);
 		filterPanel.add(filterLabel);
 		
 		JPanel fonction3Panel = new JPanel();
-		fonction3Panel.setBackground(bgMainColor);
+		fonction3Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		fonction3Panel.setBounds(377, 0, 120, 50);
 		fonction3Panel.setLayout(null);
 		navBarPanel.add(fonction3Panel);
@@ -259,13 +253,13 @@ public class MainFrame {
 		fonction3Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		fonction3Label.setHorizontalAlignment(SwingConstants.CENTER);
 		fonction3Label.setFont(titleFont);
-		fonction3Label.setBackground(whiteColor);
-		fonction3Label.setForeground(whiteColor);
+		fonction3Label.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+		fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		fonction3Label.setBounds(0, 0, 120, 50);
 		fonction3Panel.add(fonction3Label);
 		
 		JPanel fonction4Panel = new JPanel();
-		fonction4Panel.setBackground(bgMainColor);
+		fonction4Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		fonction4Panel.setBounds(500, 0, 120, 50);
 		fonction4Panel.setLayout(null);
 		navBarPanel.add(fonction4Panel);
@@ -274,8 +268,8 @@ public class MainFrame {
 		fonction4Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		fonction4Label.setHorizontalAlignment(SwingConstants.CENTER);
 		fonction4Label.setFont(titleFont);
-		fonction4Label.setBackground(whiteColor);
-		fonction4Label.setForeground(whiteColor);
+		fonction4Label.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+		fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		fonction4Label.setBounds(0, 0, 120, 50);
 		fonction4Panel.add(fonction4Label);
 		/********** End Header **********/
@@ -283,7 +277,7 @@ public class MainFrame {
 		/**********   Body   **********/
 		JPanel bodyPanel = new JPanel();
 		bodyPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		bodyPanel.setBackground(bgSecondaryColor);
+		bodyPanel.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
 		bodyPanel.setBounds(2, 142, 746, 429);
 		bodyPanel.setLayout(null);
 		frmDefifootManager.getContentPane().add(bodyPanel);
@@ -304,11 +298,11 @@ public class MainFrame {
 		generateDetailsPanel.add(generateActionsPanel);
 
 		String[] petStrings = { "Choisir ta tactique", "4-3-3", "4-4-2", "4-5-1", "3-5-2", "3-4-4", "5-4-1", "5-3-2" };
-		JComboBox strategyComboBox = new JComboBox(petStrings);
+		JComboBox<Object> strategyComboBox = new JComboBox<Object>(petStrings);
 		strategyComboBox.setFocusable(false);
 		strategyComboBox.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		strategyComboBox.setBackground(whiteColor);
-		strategyComboBox.setForeground(bgMainColor);
+		strategyComboBox.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+		strategyComboBox.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		strategyComboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		strategyComboBox.setBounds(0, 42, 145, 35);
 		generateActionsPanel.add(strategyComboBox);
@@ -316,8 +310,8 @@ public class MainFrame {
 		strategyComboBox.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(bgSecondaryColor);
-				me.getComponent().setForeground(successColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 		});
 		
@@ -327,8 +321,8 @@ public class MainFrame {
 		generateButton.setFocusPainted(false);
 		generateButton.setFont(buttonFont);
 		generateButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		generateButton.setBackground(bgButtonActiveColor);
-		generateButton.setForeground(whiteColor);
+		generateButton.setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+		generateButton.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		generateButton.setIconTextGap(7);
 		generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/generate.png")).getImage()));
 		generateButton.setBounds(0, 163, 145, 35);
@@ -339,10 +333,10 @@ public class MainFrame {
 			public void mouseEntered(MouseEvent me) {
 				if(me.getComponent().isEnabled()) {
 					generateButton.setBorderPainted(true);
-					generateButton.setBorder(BorderFactory.createLineBorder(linkColor));
+					generateButton.setBorder(BorderFactory.createLineBorder(Color.decode(MainFrame.prop.getProperty("bleu_de_france"))));
 					generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/generate_reverse.png")).getImage()));
-					generateButton.setBackground(whiteColor);
-					generateButton.setForeground(bgButtonActiveColor);
+					generateButton.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+					generateButton.setForeground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
 				}
 			}
 			@Override
@@ -350,8 +344,8 @@ public class MainFrame {
 				if(me.getComponent().isEnabled()) {
 					generateButton.setBorderPainted(false);
 					generateButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/generate.png")).getImage()));
-					generateButton.setBackground(bgButtonActiveColor);
-					generateButton.setForeground(whiteColor);
+					generateButton.setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+					generateButton.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 				}
 			}
 		});
@@ -362,8 +356,8 @@ public class MainFrame {
 		initButton.setFocusPainted(false);
 		initButton.setFont(buttonFont);
 		initButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		initButton.setBackground(bgButtonActiveColor);
-		initButton.setForeground(whiteColor);
+		initButton.setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+		initButton.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		initButton.setIconTextGap(7);
 		initButton.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize.png")).getImage()));
 		initButton.setBounds(0, 283, 145, 35);
@@ -374,10 +368,10 @@ public class MainFrame {
 			public void mouseEntered(MouseEvent me) {
 				if(me.getComponent().isEnabled()) {
 					((AbstractButton) me.getComponent()).setBorderPainted(true);
-					((JComponent) me.getComponent()).setBorder(BorderFactory.createLineBorder(linkColor));
+					((JComponent) me.getComponent()).setBorder(BorderFactory.createLineBorder(Color.decode(MainFrame.prop.getProperty("bleu_de_france"))));
 					((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize_reverse.png")).getImage()));
-					me.getComponent().setBackground(whiteColor);
-					me.getComponent().setForeground(bgButtonActiveColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+					me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
 				}
 			}
 			@Override
@@ -385,31 +379,29 @@ public class MainFrame {
 				if(me.getComponent().isEnabled()) {
 					((AbstractButton) me.getComponent()).setBorderPainted(false);
 					((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize.png")).getImage()));
-					me.getComponent().setBackground(bgButtonActiveColor);
-					me.getComponent().setForeground(whiteColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+					me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 				}
 			}
 			@Override
 			public void mouseClicked(MouseEvent me) {
 				strategyComboBox.setSelectedIndex(0);
 				((AbstractButton) me.getComponent()).setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/btn/initialize.png")).getImage()));
-				me.getComponent().setBackground(bgButtonActiveColor);
-				me.getComponent().setForeground(whiteColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+				me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 			}
 		});
 		
-
-
 		strategyComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ie) {
 				if(strategyComboBox.getSelectedIndex() == 0) {
-					strategyComboBox.setBackground(whiteColor);
-					strategyComboBox.setForeground(bgMainColor);
+					strategyComboBox.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+					strategyComboBox.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 					generateButton.setEnabled(false);
 					initButton.setEnabled(false);
 				} else {
-					strategyComboBox.setBackground(bgMainColor);
-					strategyComboBox.setForeground(whiteColor);
+					strategyComboBox.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					strategyComboBox.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 					generateButton.setEnabled(true);
 					initButton.setEnabled(true);
 				}
@@ -434,7 +426,7 @@ public class MainFrame {
 			public void mouseEntered(MouseEvent e) {
 				if(strategyComboBox.getSelectedIndex() != 0) {
 					strategyActionsPanel.setVisible(true);
-					strategyPanel.setBorder(new MatteBorder(3, 3, 3, 3, grayColor));
+					strategyPanel.setBorder(new MatteBorder(3, 3, 3, 3, Color.decode(MainFrame.prop.getProperty("dark_gray"))));
 				}
 			}
 		});
@@ -445,11 +437,11 @@ public class MainFrame {
 				strategyActionsPanel.setVisible(false);
 				strategyPanel.setBorder(null);
 				if(strategyComboBox.getSelectedIndex() == 0) {
-					strategyComboBox.setBackground(bgSecondaryColor);
-					strategyComboBox.setForeground(successColor);
+					strategyComboBox.setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+					strategyComboBox.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 				} else {
-					strategyComboBox.setBackground(bgMainColor);
-					strategyComboBox.setForeground(whiteColor);
+					strategyComboBox.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					strategyComboBox.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 				}
 			}
 		});
@@ -483,10 +475,10 @@ public class MainFrame {
 		AddToFavoritePanel.setLayout(null);
 		strategyPanel.add(AddToFavoritePanel);
 		
-		JLabel AddToFavoriteLabel = new JLabel("Ajoutط£آ©e aux favoris");
+		JLabel AddToFavoriteLabel = new JLabel("Ajoutée aux favoris");
 		AddToFavoriteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		AddToFavoriteLabel.setFont(buttonFont);
-		AddToFavoriteLabel.setForeground(whiteColor);
+		AddToFavoriteLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		AddToFavoriteLabel.setBounds(10, 10, 150, 25);
 		AddToFavoritePanel.add(AddToFavoriteLabel);
 		
@@ -527,8 +519,8 @@ public class MainFrame {
 			public void mouseClicked(MouseEvent me) {
 				boolean fileCreated = false;
 				do {
-		    		UIManager.put("OptionPane.background", bgSecondaryColor);
-					UIManager.put("Panel.background", bgSecondaryColor);
+		    		UIManager.put("OptionPane.background", Color.decode(MainFrame.prop.getProperty("white")));
+					UIManager.put("Panel.background", Color.decode(MainFrame.prop.getProperty("white")));
 					JFileChooser chooser = new JFileChooser(new File(filePath));
 					chooser.setDialogTitle("Sauvegarder ta tactique");
 					chooser.setFileFilter(new FileTypeFilter(".png", "Fichier Image"));
@@ -547,7 +539,7 @@ public class MainFrame {
 				    	if(file.exists()) {
 							String[] options = {"Oui", "Non"};
 							int dialog = JOptionPane.showOptionDialog(frmDefifootManager,
-						            "ط£ظ¹tes-vous sط£آ»re de vouloir remplacer le fichier existant?",
+						            "Etes-vous sûre de vouloir remplacer le fichier existant?",
 						            "Confirmer",
 						            JOptionPane.YES_NO_OPTION,
 						            JOptionPane.QUESTION_MESSAGE,
@@ -559,15 +551,15 @@ public class MainFrame {
 						    	try{
 						    		ImageIO.write((BufferedImage)img, "png", file);
 						    		JOptionPane.showMessageDialog(null,
-						    			"La tactique a bien ط£آ©tط£آ© sauvegardط£آ©e.",
-						    			"Complط£آ©tط£آ©e",
+						    			"La tactique a bien été sauvegardée.",
+						    			"Complétée",
 						    		    JOptionPane.INFORMATION_MESSAGE,
 						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/success.png")).getImage()));
 						    		filePath = file.getParent();
 						    		fileCreated = true;
 						    	} catch (Exception e) {
 						    		JOptionPane.showMessageDialog(null,
-						    			"La tactique n'a pas ط£آ©tط£آ© sauvegardط£آ©e!",
+						    			"La tactique n'a pas été sauvegardée!",
 						    			"Echec",
 						    		    JOptionPane.ERROR_MESSAGE,
 						    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/error.png")).getImage()));
@@ -579,15 +571,15 @@ public class MainFrame {
 				    		try {
 					    		ImageIO.write((BufferedImage)img, "png", file);
 						    	JOptionPane.showMessageDialog(null,
-					    			"La tactique a bien ط£آ©tط£آ© sauvegardط£آ©e.",
-					    			"Complط£آ©tط£آ©e",
+					    			"La tactique a bien été sauvegardée.",
+					    			"Complétée",
 					    		    JOptionPane.INFORMATION_MESSAGE,
 					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/success.png")).getImage()));
 						    	filePath = file.getParent();
 						    	fileCreated = true;
 					    	} catch (Exception e) {
 					    		JOptionPane.showMessageDialog(null,
-					    			"La tactique n'a pas ط£آ©tط£آ© sauvegardط£آ©e!",
+					    			"La tactique n'a pas été sauvegardée!",
 					    			"Echec",
 					    		    JOptionPane.ERROR_MESSAGE,
 					    		    new ImageIcon(new ImageIcon(this.getClass().getResource("images/icons/error.png")).getImage()));
@@ -653,7 +645,7 @@ public class MainFrame {
 		filterDetailsPanel.setBounds(0, 0, 746, 429);
 		filterDetailsPanel.setLayout(null);
 		filterDetailsPanel.setVisible(false);
-		filterDetailsPanel.setBackground(dangerColor);
+		filterDetailsPanel.setBackground(Color.decode(MainFrame.prop.getProperty("coral_red")));
 		bodyPanel.add(filterDetailsPanel);
 		
 		JLabel filterTitleLabel = new JLabel("Filtrer la meilleure composition");
@@ -683,14 +675,14 @@ public class MainFrame {
 		////////////////////////////////////////////////////////////
 		JPanel connexionPanel = new JPanel();
 		connexionPanel.setVisible(false);
-		connexionPanel.setBorder(new TitledBorder(new MatteBorder(3, 3, 3, 3, grayColor), "Se connecter ط£آ  Defifoot", TitledBorder.LEADING, TitledBorder.TOP, null, grayColor));
+		connexionPanel.setBorder(new TitledBorder(new MatteBorder(3, 3, 3, 3, Color.decode(MainFrame.prop.getProperty("dark_gray"))), "Se connecter à Defifoot", TitledBorder.LEADING, TitledBorder.TOP, null, Color.decode(MainFrame.prop.getProperty("dark_gray"))));
 		connexionPanel.setOpaque(false);
 		connexionPanel.setBounds(173, 89, 400, 250);
 		connexionPanel.setLayout(null);
 		bodyPanel.add(connexionPanel);
 		
 		JPanel usernamePanel = new JPanel();
-		usernamePanel.setBorder(new MatteBorder(1, 1, 1, 1, grayColor));
+		usernamePanel.setBorder(new MatteBorder(1, 1, 1, 1, Color.decode(MainFrame.prop.getProperty("dark_gray"))));
 		usernamePanel.setBounds(119, 57, 163, 35);
 		usernamePanel.setLayout(null);
 		connexionPanel.add(usernamePanel);
@@ -705,12 +697,12 @@ public class MainFrame {
 		usernameTextField.setOpaque(false);
 		usernameTextField.setBorder(null);
 		usernameTextField.setFont(mediumFont);
-		usernameTextField.setForeground(grayColor);
+		usernameTextField.setForeground(Color.decode(MainFrame.prop.getProperty("dark_gray")));
 		usernameTextField.setBounds(34, 0, 120, 35);
 		usernamePanel.add(usernameTextField);
 		
 		JPanel passwordPanel = new JPanel();
-		passwordPanel.setBorder(new MatteBorder(1, 1, 1, 1, grayColor));
+		passwordPanel.setBorder(new MatteBorder(1, 1, 1, 1, Color.decode(MainFrame.prop.getProperty("dark_gray"))));
 		passwordPanel.setBounds(119, 107, 163, 35);
 		passwordPanel.setLayout(null);
 		connexionPanel.add(passwordPanel);
@@ -725,7 +717,7 @@ public class MainFrame {
 		passwordField.setOpaque(false);
 		passwordField.setBorder(null);
 		passwordField.setFont(mediumFont);
-		passwordField.setForeground(grayColor);
+		passwordField.setForeground(Color.decode(MainFrame.prop.getProperty("dark_gray")));
 		passwordField.setBounds(34, 0, 120, 35);
 		passwordPanel.add(passwordField);
 		
@@ -736,8 +728,8 @@ public class MainFrame {
 		loginButton.setFocusPainted(false);
 		loginButton.setFont(buttonFont);
 		loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		loginButton.setBackground(bgButtonActiveColor);
-		loginButton.setForeground(whiteColor);
+		loginButton.setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+		loginButton.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		loginButton.setBounds(119, 157, 163, 35);
 		connexionPanel.add(loginButton);
 		
@@ -750,7 +742,7 @@ public class MainFrame {
 		JLabel loginFailedLabel = new JLabel("*Login ou mot de passe incorrect");
 		loginFailedLabel.setVisible(false);
 		loginFailedLabel.setFont(mediumFont);
-		loginFailedLabel.setForeground(dangerColor);
+		loginFailedLabel.setForeground(Color.decode(MainFrame.prop.getProperty("coral_red")));
 		loginFailedLabel.setBounds(95, 202, 210, 32);
 		connexionPanel.add(loginFailedLabel);
 		
@@ -759,9 +751,9 @@ public class MainFrame {
 			public void focusGained(FocusEvent fe) {
 				if(Objects.equals(usernameTextField.getText(), "Pseudo")) {
 					usernameTextField.setText("");
-					usernameTextField.setForeground(blackColor);
+					usernameTextField.setForeground(Color.decode(MainFrame.prop.getProperty("onyx")));
 				}
-				if(Objects.equals(passwordField.getForeground(), grayColor)) {
+				if(Objects.equals(passwordField.getForeground(), Color.decode(MainFrame.prop.getProperty("dark_gray")))) {
 					loginButton.setEnabled(false);
 				}
 			}
@@ -769,7 +761,7 @@ public class MainFrame {
 			public void focusLost(FocusEvent fe) {
 				if(Objects.equals(usernameTextField.getText(), "") || Objects.equals(usernameTextField.getText(), "Pseudo")) {
 					usernameTextField.setText("Pseudo");
-					usernameTextField.setForeground(grayColor);
+					usernameTextField.setForeground(Color.decode(MainFrame.prop.getProperty("dark_gray")));
 				}
 			}
 		});
@@ -780,7 +772,7 @@ public class MainFrame {
 				if(Objects.equals(usernameTextField.getText(), "")) {
 					loginButton.setEnabled(false);
 				} else {
-					if(Objects.equals(passwordField.getPassword(), "")  || Objects.equals(passwordField.getForeground(), grayColor)) {
+					if(Objects.equals(passwordField.getPassword(), "")  || Objects.equals(passwordField.getForeground(), Color.decode(MainFrame.prop.getProperty("dark_gray")))) {
 						loginButton.setEnabled(false);
 					} else {
 						loginButton.setEnabled(true);
@@ -791,32 +783,35 @@ public class MainFrame {
 		});
 		
 		passwordField.addFocusListener(new FocusAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusGained(FocusEvent fe) {
 				if(Objects.equals(passwordField.getText(), "MotDePasse")) {
 					passwordField.setText("");
-					passwordField.setForeground(blackColor);
+					passwordField.setForeground(Color.decode(MainFrame.prop.getProperty("onyx")));
 				}
-				if(Objects.equals(usernameTextField.getForeground(), grayColor)) {
+				if(Objects.equals(usernameTextField.getForeground(), Color.decode(MainFrame.prop.getProperty("dark_gray")))) {
 					loginButton.setEnabled(false);
 				}
 			}
+			@SuppressWarnings("deprecation")
 			@Override
 			public void focusLost(FocusEvent fe) {
 				if(Objects.equals(passwordField.getText(), "") || Objects.equals(passwordField.getText(), "MotDePasse")) {
 					passwordField.setText("MotDePasse");
-					passwordField.setForeground(grayColor);
+					passwordField.setForeground(Color.decode(MainFrame.prop.getProperty("dark_gray")));
 				}
 			}
 		});
 		
 		passwordField.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void keyReleased(KeyEvent ky) {
 				if(Objects.equals(passwordField.getText(), "")) {
 					loginButton.setEnabled(false);
 				} else {
-					if(Objects.equals(usernameTextField.getText(), "")  || Objects.equals(usernameTextField.getForeground(), grayColor)) {
+					if(Objects.equals(usernameTextField.getText(), "")  || Objects.equals(usernameTextField.getForeground(), Color.decode(MainFrame.prop.getProperty("dark_gray")))) {
 						loginButton.setEnabled(false);
 					} else {
 						loginButton.setEnabled(true);
@@ -831,17 +826,17 @@ public class MainFrame {
 			public void mouseEntered(MouseEvent me) {
 				if(me.getComponent().isEnabled()) {
 					((AbstractButton) me.getComponent()).setBorderPainted(true);
-					((JComponent) me.getComponent()).setBorder(BorderFactory.createLineBorder(linkColor));
-					me.getComponent().setBackground(whiteColor);
-					me.getComponent().setForeground(bgButtonActiveColor);
+					((JComponent) me.getComponent()).setBorder(BorderFactory.createLineBorder(Color.decode(MainFrame.prop.getProperty("bleu_de_france"))));
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+					me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
 				}
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
 				if(me.getComponent().isEnabled()) {
 					((AbstractButton) me.getComponent()).setBorderPainted(false);
-					me.getComponent().setBackground(bgButtonActiveColor);
-					me.getComponent().setForeground(whiteColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
+					me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 				}
 			}
 			@Override
@@ -883,14 +878,14 @@ public class MainFrame {
 		generatePanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(whiteColor);
-				generateLabel.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
 				if(functionChosen != 1) {
-					me.getComponent().setBackground(bgMainColor);
-					generateLabel.setForeground(whiteColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 					generateLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				} else {
 					generateLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -902,24 +897,24 @@ public class MainFrame {
 					case 1:
 						return;
 					case 2:
-						filterPanel.setBackground(bgMainColor);
-						filterLabel.setForeground(whiteColor);
+						filterPanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						filterLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						filterDetailsPanel.setVisible(false);
 					case 3:
-						fonction3Panel.setBackground(bgMainColor);
-						fonction3Label.setForeground(whiteColor);
+						fonction3Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						fonction3Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						fonction_3Panel.setVisible(false);
 					case 4:
-						fonction4Panel.setBackground(bgMainColor);
-						fonction4Label.setForeground(whiteColor);
+						fonction4Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						fonction4Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						fonction_4Panel.setVisible(false);
 				}
 				functionChosen = 1;
-				me.getComponent().setBackground(whiteColor);
-				generateLabel.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 				generateDetailsPanel.setVisible(true);
 				connexionPanel.setVisible(false);
 			}
@@ -928,14 +923,14 @@ public class MainFrame {
 		filterPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(whiteColor);
-				filterLabel.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
 				if(functionChosen != 2) {
-					me.getComponent().setBackground(bgMainColor);
-					filterLabel.setForeground(whiteColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 					filterLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				} else {
 					filterLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -947,18 +942,18 @@ public class MainFrame {
 					case 2:
 						return;
 					case 1:
-						generatePanel.setBackground(bgMainColor);
-						generateLabel.setForeground(whiteColor);
+						generatePanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						generateLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						generateDetailsPanel.setVisible(false);
 					case 3:
-						fonction3Panel.setBackground(bgMainColor);
-						fonction3Label.setForeground(whiteColor);
+						fonction3Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						fonction3Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						fonction_3Panel.setVisible(false);
 					case 4:
-						fonction4Panel.setBackground(bgMainColor);
-						fonction4Label.setForeground(whiteColor);
+						fonction4Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						fonction4Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						fonction_4Panel.setVisible(false);
 				}
@@ -967,9 +962,9 @@ public class MainFrame {
 					connexionPanel.setVisible(true);
 					usernameTextField.requestFocusInWindow();
 				} else {
-					me.getComponent().setBackground(whiteColor);
-					me.getComponent().setForeground(bgMainColor);
-					filterLabel.setForeground(bgMainColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+					me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 					filterDetailsPanel.setVisible(true);
 				}
 			}
@@ -978,14 +973,14 @@ public class MainFrame {
 		fonction3Panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(whiteColor);
-				fonction3Label.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
 				if(functionChosen != 3) {
-					me.getComponent().setBackground(bgMainColor);
-					fonction3Label.setForeground(whiteColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 					fonction3Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				} else {
 					fonction3Label.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -997,24 +992,24 @@ public class MainFrame {
 					case 3:
 						return;
 					case 1:
-						generatePanel.setBackground(bgMainColor);
-						generateLabel.setForeground(whiteColor);
+						generatePanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						generateLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						generateDetailsPanel.setVisible(false);
 					case 2:
-						filterPanel.setBackground(bgMainColor);
-						filterLabel.setForeground(whiteColor);
+						filterPanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						filterLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						filterDetailsPanel.setVisible(false);
 					case 4:
-						fonction4Panel.setBackground(bgMainColor);
-						fonction4Label.setForeground(whiteColor);
+						fonction4Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						fonction4Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						fonction_4Panel.setVisible(false);
 				}
 				functionChosen = 3;
-				me.getComponent().setBackground(whiteColor);
-				fonction3Label.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 				fonction_3Panel.setVisible(true);
 				connexionPanel.setVisible(false);
 			}
@@ -1023,14 +1018,14 @@ public class MainFrame {
 		fonction4Panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setBackground(whiteColor);
-				fonction4Label.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
 				if(functionChosen != 4) {
-					me.getComponent().setBackground(bgMainColor);
-					fonction4Label.setForeground(whiteColor);
+					me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+					fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 					fonction4Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				} else {
 					fonction4Label.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -1042,24 +1037,24 @@ public class MainFrame {
 					case 4:
 						return;
 					case 1:
-						generatePanel.setBackground(bgMainColor);
-						generateLabel.setForeground(whiteColor);
+						generatePanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						generateLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						generateLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						generateDetailsPanel.setVisible(false);
 					case 2:
-						filterPanel.setBackground(bgMainColor);
-						filterLabel.setForeground(whiteColor);
+						filterPanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						filterLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						filterLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						filterDetailsPanel.setVisible(false);
 					case 3:
-						fonction3Panel.setBackground(bgMainColor);
-						fonction3Label.setForeground(whiteColor);
+						fonction3Panel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
+						fonction3Label.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 						fonction3Label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						fonction_3Panel.setVisible(false);
 				}
 				functionChosen = 4;
-				me.getComponent().setBackground(whiteColor);
-				fonction4Label.setForeground(bgMainColor);
+				me.getComponent().setBackground(Color.decode(MainFrame.prop.getProperty("white")));
+				fonction4Label.setForeground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 				fonction_4Panel.setVisible(true);
 				connexionPanel.setVisible(false);
 			}
@@ -1068,13 +1063,13 @@ public class MainFrame {
 		
 		/**********   Footer   **********/
 		JPanel footerPanel = new JPanel();
-		footerPanel.setBackground(bgMainColor);
+		footerPanel.setBackground(Color.decode(MainFrame.prop.getProperty("lime_green")));
 		footerPanel.setBounds(0, 571, 750, 29);
 		footerPanel.setLayout(null);
 		frmDefifootManager.getContentPane().add(footerPanel);
 		
 		JLabel yearLabel = new JLabel("\u00A9 Copyright 2016");
-		yearLabel.setForeground(whiteColor);
+		yearLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		yearLabel.setFont(smallFont);
 		yearLabel.setBounds(501, 7, 88, 15);
 		footerPanel.add(yearLabel);
@@ -1082,10 +1077,11 @@ public class MainFrame {
 		JLabel authorLabel = new JLabel("FouBei");
 		authorLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		authorLabel.setFont(smallFont);
-		authorLabel.setForeground(whiteColor);
+		authorLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		authorLabel.setBounds(596, 7, 33, 15);
 		footerPanel.add(authorLabel);
 		
+		@SuppressWarnings("rawtypes")
 		Map attributes = authorLabel.getFont().getAttributes();
 		attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		authorLabel.setFont(authorLabel.getFont().deriveFont(attributes));
@@ -1101,20 +1097,19 @@ public class MainFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				me.getComponent().setForeground(linkColor);
+				me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("bleu_de_france")));
 			}
 			@Override
 			public void mouseExited(MouseEvent me) {
-				me.getComponent().setForeground(whiteColor);
+				me.getComponent().setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 			}
 		});
 		
 		JLabel copyrightLabel = new JLabel("Tous droits r\u00E9serv\u00E9s.");
-		copyrightLabel.setForeground(whiteColor);
+		copyrightLabel.setForeground(Color.decode(MainFrame.prop.getProperty("white")));
 		copyrightLabel.setFont(smallFont);
 		copyrightLabel.setBounds(636, 7, 107, 15);
 		footerPanel.add(copyrightLabel);
 		/********** End Footer **********/
 	}
-
 }
