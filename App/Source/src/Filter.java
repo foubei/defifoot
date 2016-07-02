@@ -131,6 +131,7 @@ public class Filter {
 			}
 		});
 		/**************************** End Get my data *****************************/
+		
 		JPanel formationPanel = new JPanel();
 		formationPanel.setLayout(null);
 		formationPanel.setOpaque(false);
