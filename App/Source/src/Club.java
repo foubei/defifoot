@@ -34,7 +34,16 @@ public class Club {
 			result.put("nom", clubName.html());
 			Filter.getMyClubDataProgressBar.setValue(9);
 			Element otherData = content.getElementById("tabs-0").getElementsByTag("tbody").first();
-			Element managerName = otherData.child(6).child(2).child(0);
+			Element managerName = null;
+			if(otherData.child(4).html().contains("Coupe Manager :") || otherData.child(4).html().contains("Coupe Partenaire :")) {
+				if(otherData.child(5).html().contains("Coupe Partenaire :")) {
+					managerName = otherData.child(8).child(2).child(0);
+				} else {
+					managerName = otherData.child(7).child(2).child(0);
+				}
+			} else {
+				managerName = otherData.child(6).child(2).child(0);
+			}
 			result.put("manager", managerName.html());
 			Filter.getMyClubDataProgressBar.setValue(18);
 		} catch (IOException e) {
